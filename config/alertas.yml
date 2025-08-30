@@ -1,0 +1,66 @@
+alertas:
+  canales:
+    slack:
+      webhook_url: "${SLACK_WEBHOOK_URL}"
+      canal: "#pruebas-automatizadas"
+    
+    email:
+      smtp_server: "smtp.gmail.com"
+      puerto: 587
+      usuario: "${EMAIL_USER}"
+      password: "${EMAIL_PASSWORD}"
+      destinatarios:
+        - "equipo-qa@empresa.com"
+        - "devops@empresa.com"
+
+  umbrales_criticos:
+    performance:
+      response_time_p95: 2000
+      error_rate: 10.0
+      throughput_min: 5.0
+    
+    funcionales:
+      success_rate_min: 90.0
+      test_failures_max: 3
+
+  reglas:
+    - nombre: "Latencia Alta"
+      condicion: "response_time_p95 > 1500"
+      nivel: "warning"
+      mensaje: "Latencia P95 superior a 1.5 segundos"
+      canales: ["slack"]
+    
+    - nombre: "Latencia Crítica"
+      condicion: "response_time_p95 > 2000"
+      nivel: "critical"
+      mensaje: "Latencia P95 crítica - requiere atención inmediata"
+      canales: ["slack", "email"]
+    
+    - nombre: "Tasa de Error Alta"
+      condicion: "error_rate > 5.0"
+      nivel: "critical"
+      mensaje: "Tasa de error superior al 5% - sistema inestable"
+      canales: ["slack", "email"]
+    
+    - nombre: "Throughput Bajo"
+      condicion: "throughput < 10.0"
+      nivel: "warning"
+      mensaje: "Throughput bajo el mínimo esperado"
+      canales: ["slack"]
+    
+    - nombre: "Pruebas BDD Fallando"
+      condicion: "bdd_success_rate < 95.0"
+      nivel: "critical"
+      mensaje: "Pruebas BDD fallando - revisar funcionalidad"
+      canales: ["slack", "email"]
+
+  programacion:
+    verificacion_continua:
+      intervalo_minutos: 15
+      horario_activo: "08:00-20:00"
+      dias_activos: ["lunes", "martes", "miercoles", "jueves", "viernes"]
+    
+    reportes_diarios:
+      hora: "09:00"
+      incluir_metricas: true
+      incluir_tendencias: true

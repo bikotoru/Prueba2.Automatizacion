@@ -45,7 +45,7 @@ jobs:
     
     - name: Subir reportes
       if: always()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v4
       with:
         name: test-reports
         path: reports/
@@ -91,7 +91,7 @@ jobs:
     
     - name: Subir reporte de performance
       if: always()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v4
       with:
         name: performance-reports
         path: reports/performance*

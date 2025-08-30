@@ -32,7 +32,7 @@ jobs:
         behave features/ \
           --format allure_behave.formatter:AllureFormatter \
           -o reports/allure-results \
-          --format html \
+          --format behave_html_formatter:HTMLFormatter \
           -o reports/behave-report.html
       env:
         HEADLESS: true
